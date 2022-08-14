@@ -56,20 +56,24 @@ def arithmetic_arranger(li, x="False"):
         results.append(result)
         operators.append(op)
 
-    print(numbers1)
+    
     # print the first line
     count = 0
+    line1 = ""
     for number in numbers1:
         # calculate the diff between total lenght and lenght of the number
         # that way we know how many spaces to add extra
-        numblen = len(str(number))
-        diff = totlen[count] - numblen
-        print(" "*(3 + diff),number,end="")
+        line = str(number).rjust(totlen[count])
+        if count == 0:
+            line1 = line1 + line
+        else:
+            line1 = line1 + "    " + line
         count = count + 1
-    print()
+    print(line1)
 
     # print the second line
     count = 0
+    line2 = ""
     for number in numbers2:
         numblen = len(str(number))
         diff = totlen[count] - numblen
@@ -80,11 +84,23 @@ def arithmetic_arranger(li, x="False"):
         count = count + 1
     print()
 
+    # print line 3
     count = 0
-    for number in numbers2:
-        print(" "*3, "-"*totlen[count], end="")
+    line3 = ""
+    for number in numbers1:
+        countsmall = totlen[count]
+        linesmall = ""
+        while countsmall > 0:
+            line = "-"
+            linesmall = linesmall + line
+            countsmall = countsmall - 1
+
+        if count == 0:
+            line3 = linesmall
+        else:
+            line3 = line3 + "    " + linesmall
         count = count + 1
-    print()
+    print(line3)
 
     if x == True:
         count = 0
@@ -95,4 +111,5 @@ def arithmetic_arranger(li, x="False"):
             count = count + 1
         print()
 
-# arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"])
+
+arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"])
