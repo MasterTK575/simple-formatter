@@ -58,37 +58,43 @@ def arithmetic_arranger(li, x="False"):
 
     
     # print the first line
+    # use str.rjust() to center the text on the right
     count = 0
     line1 = ""
     for number in numbers1:
-        # calculate the diff between total lenght and lenght of the number
-        # that way we know how many spaces to add extra
         line = str(number).rjust(totlen[count])
         if count == 0:
             line1 = line1 + line
         else:
             line1 = line1 + "    " + line
         count = count + 1
-    print(line1)
+    line1 = line1 + "\n"
+
 
     # print the second line
     count = 0
     line2 = ""
     for number in numbers2:
-        numblen = len(str(number))
-        diff = totlen[count] - numblen
         if len(str(number)) == 4:
-            print(" "*(3 + diff - 2), operators[count], number, end="")
+            line = operators[count] + " " + str(number)
         else:
-            print(" "*(3 + diff - 3), operators[count], "", number, end="")
+            line = operators[count] + "  " + str(number)
+
+        if count == 0:
+            line2 = line2 + line
+        else:
+            line2 = line2 + "    " + line
         count = count + 1
-    print()
+    line2 = line2 + "\n"
+    # print(line2)
 
     # print line 3
+    # create the ---- lines by looping for the total lenght of the line
     count = 0
     line3 = ""
     for number in numbers1:
         countsmall = totlen[count]
+        # redefine linesmall each time to make sure it doesn't stack
         linesmall = ""
         while countsmall > 0:
             line = "-"
@@ -100,16 +106,26 @@ def arithmetic_arranger(li, x="False"):
         else:
             line3 = line3 + "    " + linesmall
         count = count + 1
-    print(line3)
+    # print(line3)
+
+
+    count = 0
+    line4 = ""
+    for number in results:
+        line = str(number).rjust(totlen[count])
+        if count == 0:
+            line4 = line4 + line
+        else:
+            line4 = line4 + "    " + line
+        count = count + 1
+    # print(line4)
 
     if x == True:
-        count = 0
-        for number in results:
-            numblen = len(str(number))
-            diff = totlen[count] - numblen
-            print(" "*(3 + diff),number,end="")
-            count = count + 1
-        print()
+        toreturn = line1 + line2 + line3 + "\n" + line4
+        return toreturn
+    else:
+        toreturn = line1 + line2 + line3
+        return toreturn
 
 
-arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"])
+print(arithmetic_arranger(["32 + 69", "3801 - 2"], True))
