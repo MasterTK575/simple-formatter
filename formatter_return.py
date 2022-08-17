@@ -6,8 +6,10 @@
 def arithmetic_arranger(li, x="False"):
     # error checking
     if len(li) > 5:
-        print("Error: Too many problems")
-        quit()
+        # you need to return here so that the test recognizes it
+        # printing doesn't work
+        # returning also stops the function from continuing
+        return "Error: Too many problems."
 
     # create some lists
     numbers1 = list()
@@ -16,7 +18,7 @@ def arithmetic_arranger(li, x="False"):
     results = list()
     totlen = list()
 
-    # for each string in the list
+    # for each string in the list, aka. each computation in ""
     for string in li:
         ind = string.split()
         
@@ -25,14 +27,14 @@ def arithmetic_arranger(li, x="False"):
             numb1 = int(ind[0])
             numb2 = int(ind[2])
         except:
-            print("Error: Numbers must only contain digits.")
-            quit()
+            return "Error: Numbers must only contain digits."
+           
         if len(str(numb1)) > 4 or len(str(numb2)) > 4:
-            print("Erorr: Numbers cannot have more than 4 digits.")
-            quit()
+            return "Error: Numbers cannot be more than four digits."
+
         op = ind[1]
         if op != "+" and op != "-":
-            print("Error: Operator must be '+' or '-'.")
+            return "Error: Operator must be '+' or '-'."
 
         # calculating the results
         if op == "+":
@@ -41,14 +43,16 @@ def arithmetic_arranger(li, x="False"):
             result = numb1 - numb2
 
         # finding out the max lenght of each problem
-        # the second numbers have at least 2 extra characters due to the operator and min. one space being in the same line
-        if len(str(numb2)) == 4:
-            lennumb2 = 6
+        # if number 1 is the biggest, use it as a proxy for total line length
+        # else use number 2
+        lennumb1 = len(str(numb1))
+        lennumb2 = len(str(numb2))
+        if lennumb1 >= lennumb2:
+            totlen.append(lennumb1 + 2)
         else:
-            lennumb2 = len(str(numb2)) + 3
+            totlen.append(lennumb2 + 2)
 
-        problem = (len(str(numb1)), lennumb2, len(str(result)))
-        totlen.append((max(problem)))
+        # print(totlen)
         
         # creating lists for each part of the problem
         numbers1.append(numb1)
@@ -75,11 +79,8 @@ def arithmetic_arranger(li, x="False"):
     count = 0
     line2 = ""
     for number in numbers2:
-        if len(str(number)) == 4:
-            line = operators[count] + " " + str(number)
-        else:
-            line = operators[count] + "  " + str(number)
-
+        # .rjust(totlen[count] - 1) to account for the operator
+        line = operators[count] + str(number).rjust(totlen[count] - 1)
         if count == 0:
             line2 = line2 + line
         else:
@@ -128,4 +129,5 @@ def arithmetic_arranger(li, x="False"):
         return toreturn
 
 
-print(arithmetic_arranger(["32 + 69", "3801 - 2"], True))
+print(arithmetic_arranger(['44 + 815', '909 - 2', '45 + 43', '123 + 49',
+          '888 + 40', '653 + 87']))
